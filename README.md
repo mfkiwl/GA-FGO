@@ -10,13 +10,13 @@ Urban GNSS positioning is severely affected by non-line-of-sight (NLOS) receptio
 
 To address this issue, the proposed framework consists of three tightly coupled components:
 
-1. Fisheye-image-based LOS/NLOS classification  
+1. **Fisheye-image-based LOS/NLOS classification**  
    Sky-view fisheye images are segmented to obtain a binary sky mask, and satellite directions are projected onto the image plane for satellite-wise visibility classification.
 
-2. Geometry-adaptive NLOS handling  
+2. **Geometry-adaptive NLOS handling**  
    Based on the number of LOS satellites and the corresponding LOS-only geometry, the algorithm adaptively switches between NLOS removal and NLOS down-weighting.
 
-3. Sliding-window factor graph optimization with pseudorange and TDCP factors  
+3. **Sliding-window factor graph optimization with pseudorange and TDCP factors**  
    Pseudorange observations and inter-epoch TDCP constraints are jointly incorporated into a fixed-lag factor graph and solved iteratively using a Levenberg–Marquardt optimizer.
 
 ## Repository Scope
@@ -29,6 +29,29 @@ The code in this repository was developed and tested in the following environmen
 
 - MATLAB R2023a
 - GTSAM 4.0.2
+
+## Main Files and Their Roles
+
+- `config/config_default.m`  
+  Defines the default parameters of the GA-FGO framework, including sliding-window settings, geometry-adaptive thresholds, and optimization-related options.
+
+- `preprocess/build_sky_mask_otsu.m`  
+  Generates a binary sky mask from the fisheye image using grayscale conversion, Otsu thresholding, and basic image post-processing.
+
+- `projection/project_satellite_to_image.m`  
+  Projects satellite azimuth and elevation angles onto the fisheye image plane for satellite-wise LOS/NLOS visibility classification.
+
+- `handling/switch_nlos_strategy.m`  
+  Implements the geometry-adaptive NLOS handling strategy by switching between NLOS exclusion and NLOS down-weighting according to LOS redundancy and GDOP.
+
+- `fgo/solve_ga_fgo_lm.m`  
+  Constructs and solves the sliding-window factor graph with pseudorange and TDCP factors using the Levenberg–Marquardt optimizer.
+
+- `run_demo_fisheye_los_nlos.m`  
+  Demonstrates the fisheye-image-based LOS/NLOS classification process.
+
+- `run_demo_ga_fgo.m`  
+  Demonstrates the overall GA-FGO pipeline, including observation handling and sliding-window factor graph optimization.
 
 ## Current Repository Structure
 
